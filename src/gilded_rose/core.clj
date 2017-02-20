@@ -6,12 +6,13 @@
   {:brie {:name "Aged Brie" :sell-in 2 :quality 0}
    :elixir {:name "Elixir of the Mongoose" :sell-in 5 :quality 7}
    :vest {:name "+5 Dexterity Vest" :sell-in 10 :quality 20}
-   :sulfuras {:name "Sulfuras, Hand Of Ragnaros" :sell-in 0 :quality 80}
+   :sulfuras {:name "Sulfuras, Hand of Ragnaros" :sell-in 0 :quality 80}
    :backstage {:name "Backstage passes to a TAFKAL80ETC concert" :sell-in 15 :quality 20}})
 
 
 (def ITEMS-NAMES (zipmap (keys ITEMS-CONFIG) (map :name (vals  ITEMS-CONFIG))))
 (def INITIAL-INVENTORY (vals ITEMS-CONFIG))
+
 
 (defn update-quality [items]
   (map
@@ -35,8 +36,12 @@
                (or (= "+5 Dexterity Vest" (:name item)) (= "Elixir of the Mongoose" (:name item)))
                (merge item {:quality (dec (:quality item))})
                :else item))
+
    (map (fn [item]
           (if (not= "Sulfuras, Hand of Ragnaros" (:name item))
             (merge item {:sell-in (dec (:sell-in item))})
             item))
         items)))
+
+(defn update-single-item [item]
+  (first (update-quality [item])))

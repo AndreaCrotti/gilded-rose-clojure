@@ -22,4 +22,8 @@
           composed (apply comp (repeat 100 core/update-quality))]
       (t/is (= (:quality (first (composed [mongoose]))) 50))))
 
+  (t/testing "Sulfuras is legendary"
+    (let [sulfuras (:sulfuras core/ITEMS-CONFIG)]
+      (t/is (= sulfuras (core/update-single-item sulfuras)))))
+
   #_(t/testing "backstage"))
