@@ -2,6 +2,22 @@
 
 (def my-constants 100)
 
+(def ^:const ITEMS-CONFIG
+  {:brie {:name "Aged Brie" :sell-in 2 :quality 0}
+   :elixir {:name "Elixir of the Mongoose" :sell-in 5 :quality 7}
+   :vest {:name "Elixir of the Mongoose" :sell-in 10 :quality 20}
+   :sulfuras {:name "Elixir of the Mongoose" :sell-in 0 :quality 80}
+   :backstage {:name "Elixir of the Mongoose" :sell-in 15 :quality 20}})
+
+(def INITIAL-INVENTORY (vals ITEMS-CONFIG))
+
+(def ^:const INITIAL-INVENTORY
+  [(item "+5 Dexterity Vest" 10 20)
+   (item "Aged Brie" 2 0)
+   (item "Elixir of the Mongoose" 5 7)
+   (item "Sulfuras, Hand Of Ragnaros" 0 80)
+   (item "Backstage passes to a TAFKAL80ETC concert" 15 20)])
+
 (defn update-quality [items]
   (map
    (fn [item] (cond
@@ -30,14 +46,5 @@
             item))
         items)))
 
-(defn item [item-name, sell-in, quality]
-  {:name item-name, :sell-in sell-in, :quality quality})
-
 (defn update-current-inventory []
-  (let [inventory
-        [(item "+5 Dexterity Vest" 10 20)
-         (item "Aged Brie" 2 0)
-         (item "Elixir of the Mongoose" 5 7)
-         (item "Sulfuras, Hand Of Ragnaros" 0 80)
-         (item "Backstage passes to a TAFKAL80ETC concert" 15 20)]]
-    (update-quality inventory)))
+  (update-quality INITIAL-INVENTORY))
