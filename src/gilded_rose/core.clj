@@ -14,6 +14,13 @@
 (def INITIAL-INVENTORY (vals ITEMS-CONFIG))
 
 
+(defn- update-selling
+  []
+  (fn [item]
+          (if (not= "Sulfuras, Hand of Ragnaros" (:name item))
+            (merge item {:sell-in (dec (:sell-in item))})
+            item)))
+
 (defn update-quality [items]
   (map
    (fn [item] (cond
@@ -37,10 +44,7 @@
                (merge item {:quality (dec (:quality item))})
                :else item))
 
-   (map (fn [item]
-          (if (not= "Sulfuras, Hand of Ragnaros" (:name item))
-            (merge item {:sell-in (dec (:sell-in item))})
-            item))
+   (map (update-selling)
         items)))
 
 (defn update-single-item [item]
